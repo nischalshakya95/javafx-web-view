@@ -19,6 +19,8 @@ import java.io.File;
 
 public class JavaFXWebView extends Application {
 
+    public static JSObject javascriptConnector;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -27,11 +29,12 @@ public class JavaFXWebView extends Application {
     public void start(Stage primaryStage) {
         Button btn = new Button();
         btn.setText("fire JS");
+
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (webengine != null) {
-                    webengine.executeScript("myFunction()");
+                    webengine.executeScript("triggerLoadData()");
                 }
             }
         });
@@ -61,13 +64,17 @@ public class JavaFXWebView extends Application {
             webengine = webview.getEngine();
             webengine.setJavaScriptEnabled(true);
             webengine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
+
+                // We need to keep the object in the field to prevent the garbage collection of it.
+                private final MyObject myObject = new MyObject();
+
                 @Override
                 public void changed(ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) {
                     if (newValue != Worker.State.SUCCEEDED) {
                         return;
                     }
-                    JSObject window = (JSObject) webengine.executeScript("window");
-                    window.setMember("myObject", new MyObject());
+                    javascriptConnector = (JSObject) webengine.executeScript("window");
+                    javascriptConnector.setMember("myObject", myObject);
                 }
             });
 

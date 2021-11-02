@@ -6,14 +6,22 @@
 
 <p>JavaScript can change the content of an HTML element:</p>
 
-<button type="button" onclick="myObject.doIt()">Click Me!</button>
+<label>
+    <input type="text" id="inputText"/>
+</label>
+<button type="button" onclick="myFunction()">Click Me!</button>
 
 <p id="demo">This is a demonstration.</p>
 
 <script>
     function myFunction() {
         document.getElementById("demo").innerHTML = "Hello JavaScript!";
-        myObject.doIt();
+        const s = document.getElementById("inputText").value;
+        myObject.doIt(s);
+    }
+
+    function showResult(result) {
+        document.getElementById("demo").innerHTML = result;
     }
 </script>
 
