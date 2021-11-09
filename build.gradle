@@ -12,13 +12,17 @@ repositories {
 }
 
 javafx {
-    version = "16"
+    sdk = "$System.env.JAVA_HOME"
+    version = "17"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
+//    compile 'com.mohamnag:javafx-webview-debugger:0.0.1'
 }
 
 test {

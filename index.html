@@ -15,9 +15,13 @@
 
 <script>
     function myFunction() {
-        document.getElementById("demo").innerHTML = "Hello JavaScript!";
+        // document.getElementById("demo").innerHTML = "Hello JavaScript!";
         const s = document.getElementById("inputText").value;
-        myObject.doIt(s);
+        let user = {
+            age: 25,
+            name: "Nischal Shakya"
+        }
+        myObject.doIt(JSON.stringify(user));
     }
 
     function showResult(result) {
